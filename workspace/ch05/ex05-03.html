@@ -46,12 +46,24 @@
       function addMilk() {
         console.log("우유 추가 예정");
         const shoppingList = document.getElementById("purchases");
+
+        // 솔루션 1: createElement 사용
+        const newLi = document.createElement("li"); //<li>
+        const newTxt = document.createTextNode("우유"); // 우유
+
+        console.log(newLi.childNodes, newLi.firstChild, newLi.lastChild);
+        newLi.appendChild(newTxt); // <li>우유</li>
+        console.log(newLi.childNodes, newLi.firstChild, newLi.lastChild);
+        //shoppingList.appendChild(newLi); //맨 끝에 추가
+        shoppingList.insertBefore(newLi, shoppingList.firstChild); //맨 앞에 추가
+
+        // 솔루션 2: innerHTML, 누적하는게 아니라 어떤 새로운 값을 통채로 바꿔줄때 사용하는것이 유리하다.
         // innerHTML  : 요소노드의 내부 HTML 코드값을 문자열로 가지고 있는 속성
-        console.log(shoppingList.innerHTML);
-        console.log(shoppingList.outerHTML);
-        // const newShoppingList = shoppingList.innerHTML + "<li>우유</li>";
-        // shoppingList.innerHTML = newShoppingList;
-        shoppingList.innerHTML += "<li>우유</li>";
+        // console.log(shoppingList.innerHTML);
+        // console.log(shoppingList.outerHTML);
+        // // const newShoppingList = shoppingList.innerHTML + "<li>우유</li>";
+        // // shoppingList.innerHTML = newShoppingList;
+        // shoppingList.innerHTML += "<li>우유</li>";
       }
     </script>
   </head>
@@ -63,7 +75,7 @@
       <button type="button">두번째 영화 찾기</button>
       <!-- 이벤트 등록 방법 2: HTML요소의 on<event> 속성의 값으로 이벤트 발생시 실행할 코드를 등록 -->
       <button type="button" onclick="addMilk(); console.log('우유 추가 완료')">
-        마지막에 우유 추가
+        우유 추가
       </button>
       <button type="button">첫번째 항목 삭제</button>
     </div>

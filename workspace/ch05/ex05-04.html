@@ -10,9 +10,29 @@
     <h1>이벤트 등록 방식</h1>
 
     <div>
-      <button>눌러봐</button>
+      <!-- 이벤트 등록 방법 2: HTML요소의 on<event> 속성의 값으로 이벤트 발생시 실행할 코드를 등록 -->
+      <button onclick="console.log('눌렀지');">눌러봐</button>
     </div>
 
-    <script></script>
+    <script>
+      const btn = document.querySelector("button");
+      // 이벤트 등록 방법 1: elem.on<event> 속성에 이벤트 핸들러 추가
+      //dom level 0 방식(비표준)
+      btn.onclick = function () {
+        console.log("눌렀음");
+      };
+      btn.onclick = function () {
+        console.log("눌렀네");
+      };
+
+      // 이벤트 등록방법 3: addEventListner()
+      // dom level 2 방식(표준)
+      btn.addEventListener("click", function () {
+        console.log("누름");
+      });
+      btn.addEventListener("click", function () {
+        console.log("눌렀소");
+      });
+    </script>
   </body>
 </html>
