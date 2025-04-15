@@ -38,7 +38,10 @@
             //i=0, <li>두부</li>, i=1 <li>어벤저스</li>
             const firstLi = targetList[i].firstElementChild;
             //해당  노드를 삭제한다
-            firstLi?.remove(); //옵셔널 체이닝
+            //firstLi?.remove(); //옵셔널 체이닝
+
+            // 나를 기준으로 내 부모(엄마)
+            firstLi?.parentNode.removeChild(firstLi); //비권장, 에전에는 이것밖에 지원을 안했음 지금은 그냥 위에 remove()쓰면된다.
           }
         });
       });
