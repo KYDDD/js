@@ -16,11 +16,11 @@
             <li>
               <h2>쇼핑 목록</h2>
               <div class="todoinput">
-                <input type="text" autofocus />
+                <input type="text" autofocus onkeyup="handlekeyup(event)" />
                 <button type="button" onclick="handleAdd()">추가</button>
               </div>
               <ul class="todolist">
-                <li data-no="1">
+                <!-- <li data-no="1">
                   <span>1</span>
                   <span><s>샘플1</s></span>
                   <button type="button">삭제</button>
@@ -34,7 +34,7 @@
                   <span>3</span>
                   <span>샘플3</span>
                   <button type="button">삭제</button>
-                </li>
+                </li> -->
               </ul>
             </li>
           </ul>
@@ -49,12 +49,12 @@
         function getTodoItemElem(item) {
           //{ no: 3, title: '라면', done: true } //Todo 객체
           /* DOM 객체
-            return <li>
-              <span>3</span>
-              <span>샘플3</span>
-              <button type="button">삭제</button>
-            </li>
-          */
+        return <li>
+                <span>3</span>
+                <span>샘플3</span>
+                <button type="button">삭제</button>
+              </li>
+            */
           //<li>
           const liElem = document.createElement("li");
           // <span>
@@ -77,8 +77,9 @@
           titleElem.appendChild(titleTxt);
           // <button type = "button">삭제</button>
           deleteElem.setAttribute("type", "button");
-          titleElem.setAttribute("tabindex", 0); // 완료/ 미완료 처리를 위한 탭 포커싱 **접근성
           deleteElem.appendChild(deleteTxt);
+
+          titleElem.setAttribute("tabindex", 0); // 완료/ 미완료 처리를 위한 탭 포커싱 **접근성
 
           //<li><span>3</span></li>
           liElem.appendChild(noElem);
@@ -94,6 +95,22 @@
 
           // liElem.setAttribute("");
 
+          deleteElem.addEventListener("click", function (event) {
+            //no를 찾아서 ~~ 첫번째 방법
+            // const btn = event.target; //클릭 이벤트가 발생한 요소(버튼요소임 암튼 그럼)
+            // const liNode = btn.closest("li"); //closest는 btn의 조상중 셀렉터와 일치하는 가장 가까운 조상
+            // deleteItem(liNode.dataset.no);
+            //no 를 찾아서~~ 두번째 방법
+            // TODO 클로저 단원에서 확인
+            // deleteItem(item.no);
+          });
+
+          //삭제 이벤트
+          deleteElem.setAttribute("onclick", `deleteItem(${item.no});`);
+
+          // 완료/미완료 처리
+          titleElem.setAttribute("onclick", `toggleDone(${item.no});`);
+
           // <li>
           //   <span>3</span>
           //   <span>샘플3</span>
@@ -105,7 +122,18 @@
         // "추가" 버튼 클릭 이벤트 핸들러
         function handleAdd() {
           const inputElem = document.querySelector(".todoinput > input");
-          addItem(inputElem.value); //<input>, <select> 같은 폼의 입력 요소에는 value속성으로 사용자가 입력한/ 선택한 값이 저장되어 있음
+          if (inputElem.value.trim() !== "") {
+            //앞뒤 공백을 제거하는 트림 함수를 사용해서 스페이스로만 구성된 문자열이 넘어올경우를 막아줌
+            // 빈 문자일때 추가 안되도록 막음
+            addItem(inputElem.value.trim()); //<input>, <select> 같은 폼의 입력 요소에는 value속성으로 사용자가 입력한/ 선택한 값이 저장되어 있음
+            inputElem.value = "";
+            inputElem.focus(); // 추가버튼을 누르고 나면 원래 커서가 버튼에 가있는데 다시 인풋으로 옮겨라.
+          }
+        }
+
+        // 엔터 키를 눌렀을때 처리할 이벤트 핸들러
+        function handlekeyup(event) {
+          if (event.key === "Enter") handleAdd();
         }
 
         // 할일 추가
@@ -129,7 +157,22 @@
 
         // 완료/미완료 처리
 
-        function toggleDone(no) {}
+        function toggleDone(no) {
+          // 일단 취소선을 그을 부분을 선택해줘야게쬬?
+          const titleElem = document.querySelector(
+            `.todolist > li[data-no="${no}"] > span:nth-child(2)`
+          );
+          // 열심히 조건을 생각해보자
+          const isDone = titleElem.querySelector("s") !== null;
+          const text = titleElem.textContent;
+          //<s>태그가 null 이 아니라면 즉, 취소선이 있는 상태
+          if (isDone) {
+            titleElem.innerHTML = text;
+          } else {
+            //<s>태그가 없는 상태이다, 만들어 줘야겠지?
+            titleElem.innerHTML = `<s>${text}</s>`;
+          }
+        }
 
         // 완료/미완료 처리
         function deleteItem(no) {
