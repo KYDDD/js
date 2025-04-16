@@ -6,10 +6,11 @@
     <title>쇼핑목록</title>
 
     <script>
-      //html 문서 로딩 완료, 이미지, css 같은외부 컨텐츠 로딩 완료 후에 발생하는 이벤트트
-      document.addEventListener("load", function () {});
+      //html 문서 로딩 완료, 이미지, css 같은외부 컨텐츠 로딩 완료 후에 발생하는 이벤트
+      window.addEventListener("load", function () {});
 
       //html 문서 로딩 완료(DOM 객체 생성 완료) 후에 발생하는 이벤트
+      // document에서 발생한 이벤트는 버블링해서 window까지 올라갈수 있기 때문에 여기서는 window라고 사용해도된다.
       document.addEventListener("DOMContentLoaded", function () {
         //첫번쨰 버튼 찾기
         const btn1 = document.querySelector("div > button");
@@ -23,7 +24,7 @@
 
           const firstLi = movies.firstElementChild;
           const secondLi = firstLi.nextElementSibling;
-          console.log(secondLi?.firstChild.nodeValue);
+          // console.log(secondLi?.firstChild.nodeValue);
           //textContent : 요소 노드의 내부 텍스트 노드의 문자열 값을 가지고 있는 속성
           console.log(secondLi?.textContent);
 
@@ -38,10 +39,10 @@
             //i=0, <li>두부</li>, i=1 <li>어벤저스</li>
             const firstLi = targetList[i].firstElementChild;
             //해당  노드를 삭제한다
-            //firstLi?.remove(); //옵셔널 체이닝
+            firstLi?.remove(); //옵셔널 체이닝
 
             // 나를 기준으로 내 부모(엄마)
-            firstLi?.parentNode.removeChild(firstLi); //비권장, 에전에는 이것밖에 지원을 안했음 지금은 그냥 위에 remove()쓰면된다.
+            // firstLi?.parentNode.removeChild(firstLi); //비권장, 에전에는 이것밖에 지원을 안했음 지금은 그냥 위에 remove()쓰면된다.
           }
         });
       });
@@ -53,11 +54,12 @@
         // 솔루션 1: createElement 사용
         const newLi = document.createElement("li"); //<li>
         const newTxt = document.createTextNode("우유"); // 우유
+        // newLi.textContent = "우유" //이렇게 해도 되네??
 
         console.log(newLi.childNodes, newLi.firstChild, newLi.lastChild);
         newLi.appendChild(newTxt); // <li>우유</li>
         console.log(newLi.childNodes, newLi.firstChild, newLi.lastChild);
-        //shoppingList.appendChild(newLi); //맨 끝에 추가
+        // shoppingList.appendChild(newLi); //맨 끝에 추가
         shoppingList.insertBefore(newLi, shoppingList.firstChild); //맨 앞에 추가
 
         // 솔루션 2: innerHTML, 누적하는게 아니라 어떤 새로운 값을 통채로 바꿔줄때 사용하는것이 유리하다.
