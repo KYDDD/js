@@ -89,29 +89,41 @@
           liElem.appendChild(deleteElem);
 
           //custom 속성
-          // <li data-no="3">
+          // <li data-no="3"> //data-로 시작해서 뒤에 이름은 마음대로 정해주면된다,
           // elem.dataset.no -> 3
-          liElem.dataset.no = item.no;
+          //<li> -> <li data-no="3">
+          liElem.dataset.no = item.no; //값을 넣는 작업 아래걸로 해도 똑같은 기능을 작동함
+          // liElem.setAttribute("data-no", item.no);
+          liElem.dataset.done = item.done; //불린값
 
-          // liElem.setAttribute("");
-
-          deleteElem.addEventListener("click", function (event) {
+          //삭제 이벤트
+          //deleteElem.setAttribute("onclick", `deleteItem(${item.no});`);
+          deleteElem.addEventListener("click", function (e) {
             //no를 찾아서 ~~ 첫번째 방법
-            // const btn = event.target; //클릭 이벤트가 발생한 요소(버튼요소임 암튼 그럼)
-            // const liNode = btn.closest("li"); //closest는 btn의 조상중 셀렉터와 일치하는 가장 가까운 조상
-            // deleteItem(liNode.dataset.no);
+            const btn = e.target; //클릭 이벤트가 발생한 요소(버튼요소임 암튼 그럼)
+            const liNode = btn.closest("li"); //closest는 btn의 조상중 셀렉터와 일치하는 가장 가까운 조상
+            deleteItem(liNode.dataset.no);
             //no 를 찾아서~~ 두번째 방법
             // TODO 클로저 단원에서 확인
             // deleteItem(item.no);
           });
 
-          //삭제 이벤트
-          deleteElem.setAttribute("onclick", `deleteItem(${item.no});`);
+          //----------------------------------------------
 
           // 완료/미완료 처리
-          titleElem.setAttribute("onclick", `toggleDone(${item.no});`);
+          // titleElem.setAttribute("onclick", `toggleDone(${item.no});`);
 
-          // <li>
+          titleElem.addEventListener("click", function (e) {
+            //no를 찾아서 ~~ 첫번째 방법
+            const btn = e.target; //클릭 이벤트가 발생한 요소(버튼요소임 암튼 그럼)
+            const liNode = btn.closest("li"); //closest는 btn의 조상중 셀렉터와 일치하는 가장 가까운 조상
+            toggleDone(liNode.dataset.no);
+            //no 를 찾아서~~ 두번째 방법
+            // TODO 클로저 단원에서 확인
+            // deleteItem(item.no);
+          });
+
+          // <li data-no="3">
           //   <span>3</span>
           //   <span>샘플3</span>
           //   <button type="button">삭제</button>
@@ -157,6 +169,7 @@
 
         // 완료/미완료 처리
 
+        /* 내가 한 코드
         function toggleDone(no) {
           // 일단 취소선을 그을 부분을 선택해줘야게쬬?
           const titleElem = document.querySelector(
@@ -169,9 +182,29 @@
           if (isDone) {
             titleElem.innerHTML = text;
           } else {
-            //<s>태그가 없는 상태이다, 만들어 줘야겠지?
+            //<s>태그가 없는 상태이다 만들어 줘야겠지?
             titleElem.innerHTML = `<s>${text}</s>`;
           }
+        }
+        */
+
+        function toggleDone(no) {
+          const targetLi = document.querySelector(
+            `.todolist > li[data-no="${no}"]`
+          );
+          const done = targetLi.dataset.done === "true";
+          const titleEl = targetLi.querySelector("span:last-of-type");
+          if (done) {
+            //done이 true라면 <span><s>샘플</s></span> ->  <span>샘플</span>수정
+            titleEl.appendChild(titleEl.firstChild.firstChild);
+            titleEl.firstChild.remove();
+          } else {
+            //done이 false라면 <span>샘플</span> -> <span><s>샘플</s></span> 수정
+            const sElem = document.createElement("s"); // <s>
+            sElem.appendChild(titleEl.firstChild); //<s>샘플3</s>, <span></span>
+            titleEl.appendChild(sElem); //
+          }
+          targetLi.dataset.done = !done; //완료 여부를 토글
         }
 
         // 완료/미완료 처리
