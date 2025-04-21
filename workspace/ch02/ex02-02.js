@@ -8,12 +8,15 @@
 */
 
 // 함수는 함수의 인자로 전달될 수 있다.
-function foo(){
-	console.log('foo 호출.');
-};
+function foo(fn) {
+  console.log("foo 호출.");
+  fn();
+}
 
-function bar(){
-	console.log('bar 호출.');
-};
+function bar() {
+  console.log("bar 호출.");
+}
 
-foo();
+// foo(bar()); 이렇게 함수를 호출하면 bar호출이 출력되고 리턴값이 없으니 undefined가 반환된다.
+
+foo(bar); //이렇게 함수 자체를 넘겨줘야한다.

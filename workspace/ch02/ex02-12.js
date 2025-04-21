@@ -5,9 +5,9 @@
     선언 전에 접근하면 에러 발생 (undefined 값도 할당되지 않은 상태)
 */
 
-console.log(a);
-console.log(b);
-console.log(c);
+console.log(a); // 호이스팅 단계에서 undefined로 초기화 됨
+console.log(b); // 호이스팅 단계에서 선언만 되고 초기화가 안됨
+console.log(c); // 호이스팅 단게에서 선언만 되고 초기화가 안됨
 
 var a = 10;
 let b = 20;
