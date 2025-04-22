@@ -23,8 +23,12 @@ const rara = {
 };
 
 // 함수 호출하는 방법 1 - 일반 함수로 호출(this는 window)
-console.log(getPingName());
+console.log(getPingName()); //this = window
 
 // 함수 호출하는 방법 2 - 메서드로 호출(this는 메서드를 정의한 객체. baro)
 console.log(baro.age, baro.getName()); // getName()의 this는 baro
 console.log(rara.age, rara.getName()); // getName()의 this는 rara
+
+console.log(getPingName(), getPingName.call(baro)); //this = window, baro
+console.log(baro.getName(), baro.getName.apply(rara)); //this = baro, rara
+console.log(rara.getName(), rara.getName.apply(globalThis)); //this = rara, window
