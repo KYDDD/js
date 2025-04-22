@@ -3,11 +3,14 @@
   - this는 window 객체
 */
 
-function f1(){
-  
-};
-const f2 = function(){
-  
+function f1() {
+  console.log(this);
+  this.console.log("hello");
+  window.console.log("hi");
+  console.log("window 생략");
+}
+const f2 = function () {
+  console.log(this);
 };
 
 f1();

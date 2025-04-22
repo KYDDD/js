@@ -3,6 +3,7 @@
 */
 
 // 표현식 방식의 함수 선언(기명함수 사용예)
+// 전달받은 숫자의 팩토리얼 값을 구해서 반환하는 함수
 var f = function factorial(n) {
   if (n === 1) return 1;
   return n * factorial(n - 1);

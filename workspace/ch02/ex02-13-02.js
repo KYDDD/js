@@ -8,6 +8,8 @@
 
 function fn(n1 = 0, n2 = 0, ...nums) {
   console.log(n1, n2, nums);
+  // if(!n1) n1 = 0;
+  // n2 = n2 || 0;
   var sum = n1 + n2;
   for (var i = 0; i < nums.length; i++) {
     sum += nums[i];

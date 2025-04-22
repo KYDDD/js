@@ -14,6 +14,7 @@ const arr = [num, str]; // object(array)
 
 // 함수를 변수에 할당
 const foo = function () {
+  console.log(this);
   return "I am foo.";
 };
 // 함수를 배열의 요소로 할당
@@ -27,3 +28,8 @@ obj.baz = function () {
 };
 
 console.log(foo(), arr[3](), obj.bar(), arr[2].bar(), obj.baz());
+// foo() this는 window
+// arr.3() this는 arr
+// obj.bar() this는 obj
+// arr[2].bar() this는 obj
+// 아래 두개가 자주 쓰므로 중요
