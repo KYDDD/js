@@ -13,8 +13,16 @@
  * @param {number} kor 국어 점수
  * @param {number} eng 영어 점수
  */
-const Score = function(kor, eng){
+const Score = function (kor, eng) {
+  this.kor = kor;
+  this.eng = eng;
 
+  this.sum = function () {
+    return this.kor + this.eng;
+  };
+  this.avg = function () {
+    return this.sum() / 2;
+  };
 };
 
 const s1 = new Score(90, 80);
