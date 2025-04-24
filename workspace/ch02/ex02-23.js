@@ -2,6 +2,7 @@
 const isPrime = function (num) {
   // num = 5
   // 캐시를 위한 코드
+  // 함수가 처음 호출될 때만 빈 객체를 생성하고, 이후 호출에서는 이미 있는 캐시 객체를 계속사용한다.
   isPrime._cache = isPrime._cache || {};
   if (isPrime._cache[num] !== undefined) {
     //num에 대해서 계산이 끝나고 캐시된 경우

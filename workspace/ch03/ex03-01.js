@@ -20,9 +20,12 @@ const Score = function (kor, eng) {
   this.sum = function () {
     return this.kor + this.eng;
   };
-  this.avg = function () {
-    return this.sum() / 2;
-  };
+  // this.avg = function () {
+  //   return this.sum() / 2;
+  // };
+};
+Score.prototype.avg = function () {
+  return this.sum() / 2;
 };
 
 const s1 = new Score(90, 80);
@@ -32,3 +35,10 @@ console.log(s1.sum()); // 170
 console.log(s1.avg()); // 85
 console.log(s2.sum()); // 120
 console.log(s2.avg()); // 60
+
+console.log(s1.sum === s2.sum);
+console.log(s1.avg === s2.avg);
+
+console.log(s1.toString()); //[object Object]
+console.log(s1.hasOwnProperty("sum")); //true
+console.log(s1.hasOwnProperty("avg")); //false
