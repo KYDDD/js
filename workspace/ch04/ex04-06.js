@@ -11,7 +11,7 @@ let isPrime = function (num) {
   }
 
   return prime;
-};
+}; //여기에 .memoize() 이렇게 할수도 있다
 
 // isPrime함수에 메모이제이션 기능 추가
 isPrime = isPrime.memoize();
