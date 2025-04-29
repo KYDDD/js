@@ -18,16 +18,29 @@ aBcDeFg
 AbCdEfG
 */
 
-const readline = require('readline');
+const readline = require("readline");
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout,
 });
 
 let input = [];
 
-rl.on('line', function (line) {
-    input = [line];
-}).on('close',function(){
-    str = input[0];
+rl.on("line", function (line) {
+  input = [line];
+}).on("close", function () {
+  str = input[0];
+
+  // aBcDeFg
+  let result = "";
+  for (let i = 0; i < str.length; i++) {
+    if (str[i].toUpperCase() === str[i]) {
+      // 대문자면 소문자로
+      result += str[i].toLowerCase(); //
+    } else {
+      //소문자면 대문자로
+      result += str[i].toUpperCase(); // A
+    }
+  }
+  console.log(result);
 });

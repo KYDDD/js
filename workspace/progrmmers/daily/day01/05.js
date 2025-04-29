@@ -11,12 +11,14 @@ url: https://school.programmers.co.kr/learn/courses/30/lessons/181948?language=j
 
 */
 
-const readline = require('readline');
+const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
-rl.on('close', function () {
-  
+rl.on("close", function () {
+  // \: 이스케이프 문자. \n, \t
+  // \ 자체를 문자로 표현하고 싶으면 \\
+  console.log(`!@#$%^&*(\\'"<>?:;`);
 });

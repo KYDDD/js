@@ -35,7 +35,7 @@
       return this.kor + this.eng;
     }
     avg() {
-      // 타입을 생략할 경우에 타입 추론을 한다.
+      // 리턴 타입을 생략할 경우에 타입 추론을 한다.
       return this.sum() / 2;
     }
   }
