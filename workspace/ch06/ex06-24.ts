@@ -1,10 +1,13 @@
-// // 타입 가드 - 함수가 null을 리턴할 수 있을 경우
+// 타입 가드 - 함수가 null을 리턴할 수 있을 경우
 
-// (()=>{
-  
-//   const a = document.querySelector('a[href="ch06/ex06-24.js"]');
+(() => {
+  const a = document.querySelector('a[href="ch06/ex06-24.js"]');
 
-//   // FIXME 타입 단언을 사용해서 타입 에러를 없애세요.
-//   a.textContent += ' 클릭';
+  // FIXME 타입 단언을 사용해서 타입 에러를 없애세요.
+  //   if (a !== null) {
+  //     a.textContent += " 클릭";
+  //   }
 
-// })();
+  //Nom-null assertion(!):  TS문법. 객체가 null이나 undefined가 아님을 단언
+  a!.textContent += " 클릭";
+})();
