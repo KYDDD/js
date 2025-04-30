@@ -21,10 +21,10 @@
   ];
 
   // FIXME: 아래 출력 결과와 같이 출력 되도록 함수 작성
-  //   function createDropdownList(list: DropdownItem<string | number>[]) {
-  function createDropdownList<T extends string | number>(
-    list: DropdownItem<T>[]
-  ) {
+  function createDropdownList(list: DropdownItem<string | number>[]) {
+    //   function createDropdownList<T extends string | number>(
+    //     list: DropdownItem<T>[]
+    //   ) {
     //dropdownitem으로 구성된 배열
     let value;
     let options = "";

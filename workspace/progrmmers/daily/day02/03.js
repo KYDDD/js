@@ -21,16 +21,24 @@ d
 e
 */
 
-const readline = require('readline');
+const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 let input = [];
 
-rl.on('line', function (line) {
+rl.on("line", function (line) {
   input = [line];
-}).on('close',function(){
+}).on("close", function () {
   str = input[0];
+  printStr(str);
 });
+
+// 전달받은 문자열을 시계 방향으로 90도 회전한 모양으로 출력한다.
+function printStr(str) {
+  for (let s of str) {
+    console.log(s);
+  }
+}

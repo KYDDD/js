@@ -12,6 +12,7 @@
     selected?: boolean;
   }
   const cityList: City[] = [
+    //City로 구성된 배열
     { value: "Seoul", selected: false },
     { value: "busan" },
     { value: "GwangJu", selected: true },
