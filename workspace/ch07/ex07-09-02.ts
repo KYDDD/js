@@ -1,12 +1,11 @@
 // 내장 객체 - Date
 
-(()=>{
-  
-  const startDate = new Date('2025-03-27');
+(() => {
+  const startDate = new Date("2025-03-27");
   const finishDate = new Date(2025, 7, 8); // 년, 월(0부터 시작), 일
 
-  console.log('JS 수업 시작일', getDate(startDate));
-  console.log('수료일', getDate(finishDate));
+  console.log("JS 수업 시작일", getDate(startDate));
+  console.log("수료일", getDate(finishDate));
 
   // FIXME startDate는 용쌤과 만난 날입니다. 오늘이 몇일째 되는 날인지 출력하세요.
   const today = new Date(); // 현재 시간
@@ -22,6 +21,4 @@
     // FIXME date를 YYYY-MM-DD 형식으로 변환하여 반환하는 함수를 작성하세요.
     return ``;
   }
-
 })();
-

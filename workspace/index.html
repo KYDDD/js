@@ -7,68 +7,110 @@
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://unpkg.com/jquery@3.7.1/dist/jquery.js"></script>
     <script src="https://unpkg.com/lodash@4.17.21/lodash.js"></script>
+    <script src="https://unpkg.com/dayjs@1.11.13/dayjs.min.js"></script>
     <script src="js/mylib.js"></script>
     <script>
-      $(function () {
-        $(".chapter-title").click(function () {
+      jQuery(function () {
+        (($) => {
+          $(".chapter-title").click(function () {
+            const openChapter =
+              JSON.parse(localStorage.getItem("openChapter")) || [];
+            if (
+              $(this)
+                .parent()
+                .toggleClass("chapter-open")
+                .hasClass("chapter-open")
+            ) {
+              $(this).children("button").text("예제목록 접기");
+              openChapter.push($(this).parent().index());
+            } else {
+              $(this).children("button").text("예제목록 펼치기");
+              openChapter.splice(
+                openChapter.indexOf($(this).parent().index()),
+                1
+              );
+            }
+            localStorage.setItem("openChapter", JSON.stringify(openChapter));
+          });
           const openChapter =
             JSON.parse(localStorage.getItem("openChapter")) || [];
-          if (
-            $(this)
-              .parent()
-              .toggleClass("chapter-open")
-              .hasClass("chapter-open")
-          ) {
-            $(this).children("button").text("예제목록 접기");
-            openChapter.push($(this).parent().index());
-          } else {
-            $(this).children("button").text("예제목록 펼치기");
-            openChapter.splice(
-              openChapter.indexOf($(this).parent().index()),
-              1
-            );
+          for (let chapter of openChapter) {
+            $(".chapter").eq(chapter).addClass("chapter-open");
           }
-          localStorage.setItem("openChapter", JSON.stringify(openChapter));
-        });
-        const openChapter =
-          JSON.parse(localStorage.getItem("openChapter")) || [];
-        for (let chapter of openChapter) {
-          $(".chapter").eq(chapter).addClass("chapter-open");
-        }
-      });
 
-      $(function () {
-        $(".paragraph > ul a").click(function (e) {
-          $(".paragraph > ul a").removeClass("clicked");
-          $(this).addClass("clicked");
-          const url = $(this).attr("href");
-          const extName = url.split(".")[1];
-          if (extName == "js") {
-            e.preventDefault();
-            console.clear();
-            var title = $(this).text();
-            console.log("<<< " + title + " 예제 실행 결과(" + url + ") >>>");
-            $.get(
-              url,
-              function (data) {
-                if (data.trim) {
-                  data = data.trim();
-                }
-                console.log(data);
-                console.log("\n\n");
+          $(".paragraph > ul a").click(function (e) {
+            $(".paragraph > ul a").removeClass("clicked");
+            $(this).addClass("clicked");
+            const url = $(this).attr("href");
+            const extName = url.split(".")[1];
+            if (extName == "js") {
+              e.preventDefault();
+              console.clear();
+              var title = $(this).text();
+              console.log("<<< " + title + " 예제 실행 결과(" + url + ") >>>");
+              $.get(
+                url,
+                function (data) {
+                  if (data.trim) {
+                    data = data.trim();
+                  }
+                  console.log(data);
+                  console.log("\n\n");
 
-                const script = document.createElement("script");
-                // script.type = "module";
-                script.textContent = data;
+                  const script = document.createElement("script");
+                  script.type = "module";
+                  script.textContent = data;
 
-                const scriptResult = document.querySelector("#script-result");
-                scriptResult.firstElementChild?.remove();
-                scriptResult.appendChild(script);
-              },
-              "text"
-            );
+                  const scriptResult = document.querySelector("#script-result");
+                  scriptResult.firstElementChild?.remove();
+                  scriptResult.appendChild(script);
+                },
+                "text"
+              );
+            }
+          });
+
+          // TS 모드 체크
+          const toggleTS = () => {
+            console.log("TS");
+            localStorage.setItem("isTS", "yes");
+            $(".main-contents").addClass("ts");
+            // ch01/, ch02/, ch03/, ch04/ 로 시작하는 링크 주소 앞에 ts-refactoring 추가
+            $(
+              '.paragraph a[href^="ch01/"], .paragraph a[href^="ch02/"], .paragraph a[href^="ch03/"], .paragraph a[href^="ch04/"]'
+            ).each(function () {
+              $(this).attr("href", "ts-refactoring/" + $(this).attr("href"));
+            });
+          };
+
+          // JS 모드 체크
+          const toggleJS = () => {
+            console.log("JS");
+            localStorage.removeItem("isTS");
+            $(".main-contents").removeClass("ts");
+            // ts-refactoring 로 시작하는 링크 주소에서 ts-refactoring/ 제거
+            $('.paragraph a[href^="ts-refactoring/"]').each(function () {
+              $(this).attr(
+                "href",
+                $(this).attr("href").replace("ts-refactoring/", "")
+              );
+            });
+          };
+
+          if (localStorage.getItem("isTS") == "yes") {
+            $("#language-toggle").prop("checked", true);
+            toggleTS();
           }
-        });
+
+          $("#language-toggle").change(function () {
+            console.log("change");
+            if ($(this).is(":checked")) {
+              toggleTS();
+            } else {
+              toggleJS();
+            }
+          });
+        })(jQuery);
       });
     </script>
   </head>
@@ -77,6 +119,13 @@
       <header class="header">
         <h1 class="example-title">Javascript 실습</h1>
       </header>
+      <div class="toggle-container">
+        <input type="checkbox" id="language-toggle" class="toggle-input" />
+        <label for="language-toggle" class="toggle-label">
+          <span class="toggle-ts">TS</span>
+          <span class="toggle-js">JS</span>
+        </label>
+      </div>
       <div class="main-contents">
         <section class="chapter">
           <div class="chapter-title">
@@ -853,6 +902,7 @@
             </ul>
           </section>
         </section>
+
         <section class="chapter">
           <div class="chapter-title">
             <h3 tabindex="0">7강: 내장 함수, 내장 객체</h3>
