@@ -44,5 +44,5 @@
   // 앞의 값이 거짓이면 앞의 값을 반환
 
   const idNull: string | null = null; //type은 object
-  console.log("글자수", idNull && idNull?.length);
+  //   console.log("글자수", idNull && idNull?.length);
 }
