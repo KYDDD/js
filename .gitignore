@@ -6,3 +6,4 @@ workspace/ch06/*.js
 workspace/ch07/*.js
 workspace/ts-refactoring/*/*.js
 .github
+node_modules
