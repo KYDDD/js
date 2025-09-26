@@ -186,3 +186,38 @@
 1 1
 */
 
+function main() {
+  const data = getData();
+  const maxArray = [];
+
+  for (let i = 0; i < data.length; i++) {
+    maxArray.push(Math.max(...data[i]));
+  }
+  const maxValue = Math.max(...maxArray);
+  console.log(maxValue);
+
+  for (let i = 0; i < data.length; i++) {
+    for (let j = 0; j < data[i].length; j++) {
+      if (data[i][j] === maxValue) {
+        console.log(i + 1, j + 1);
+        return;
+      }
+    }
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
