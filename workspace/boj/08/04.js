@@ -85,3 +85,30 @@
 1089
 */
 
+function main() {
+  const data = getData();
+
+  const number = 4 ** data;
+
+  const square = number ** 0.5;
+
+  const count = (square + 1) ** 2;
+
+  console.log(count);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
