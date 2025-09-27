@@ -42,3 +42,32 @@ C의 단위는 센트이다. (1달러 = 100센트) (1<=C<=500)
 7 1 1 4
 */
 
+function main() {
+  const data = getData();
+  const repeat = data[0];
+
+  for (let i = 1; i <= repeat; i++) {
+    const Q = data[i] / 25;
+    const D = (data[i] % 25) / 10;
+    const N = ((data[i] % 25) % 10) / 5;
+    const P = ((data[i] % 25) % 10) % 5;
+
+    console.log(Math.floor(Q), Math.floor(D), Math.floor(N), Math.floor(P));
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
