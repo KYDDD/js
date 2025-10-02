@@ -23,21 +23,13 @@ baekjoon
 function main() {
   const data = getData();
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  let result = "";
+  let result = [];
 
   for (let i = 0; i < alphabet.length; i++) {
-    for (let k = 0; k < data.length; k++) {
-      if (data[k].includes(alphabet[i])) {
-        // result += k;
-        console.log(k);
-        break;
-      } else {
-        // result += -1;
-        console.log(-1);
-      }
-    }
+    result.push(data.indexOf(alphabet[i]));
   }
-  console.log(result);
+
+  console.log(...result);
 }
 main();
 

@@ -84,3 +84,60 @@ ZZZZZZZZ 36
 2821109907455
 */
 
+function main() {
+  const input = require("fs").readFileSync(0, "utf8").trim().split(/\s+/);
+  const N = input[0]; // 문자열 그대로 받기
+  const B = parseInt(input[1], 10); // 진법은 숫자로 변환
+
+  const alphabetNumber = {
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    A: 10,
+    B: 11,
+    C: 12,
+    D: 13,
+    E: 14,
+    F: 15,
+    G: 16,
+    H: 17,
+    I: 18,
+    J: 19,
+    K: 20,
+    L: 21,
+    M: 22,
+    N: 23,
+    O: 24,
+    P: 25,
+    Q: 26,
+    R: 27,
+    S: 28,
+    T: 29,
+    U: 30,
+    V: 31,
+    W: 32,
+    X: 33,
+    Y: 34,
+    Z: 35,
+  };
+
+  // 문자열을 뒤집어서 가장 낮은 자리수부터 계산
+  const digits = N.toUpperCase().split("").reverse();
+
+  let result = 0;
+  for (let i = 0; i < digits.length; i++) {
+    const digitValue = alphabetNumber[digits[i]];
+    result += digitValue * B ** i;
+  }
+
+  console.log(result);
+}
+
+main();

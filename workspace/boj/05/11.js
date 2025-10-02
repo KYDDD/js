@@ -135,3 +135,5 @@ Single line input
 Single line input
 */
 
+const input = require("fs").readFileSync(0).toString().trim();
+console.log(input);

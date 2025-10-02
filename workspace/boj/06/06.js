@@ -54,3 +54,54 @@ dz=ak
 3
 */
 
+function main() {
+  const data = getData();
+  let count = 0;
+
+  const after = data.split("c=");
+
+  if (data.split("c=").length > 1) {
+    count = count + data.split("c=").length - 1;
+  }
+  if (data.split("c-").length > 1) {
+    count = count + data.split("c-").length - 1;
+  }
+  if (data.split("dz=").length > 1) {
+    count = count + data.split("dz=").length - 1;
+  }
+  if (data.split("d-").length > 1) {
+    count = count + data.split("d-").length - 1;
+  }
+  if (data.split("lj").length > 1) {
+    count = count + data.split("lj").length - 1;
+  }
+  if (data.split("nj").length > 1) {
+    count = count + data.split("nj").length - 1;
+  }
+  if (data.split("s=").length > 1) {
+    count = count + data.split("s=").length - 1;
+  }
+  if (data.split("z=").length > 1) {
+    count = count + data.split("z=").length - 1;
+  }
+
+  const dataLength = data.split("").length;
+
+  console.log(dataLength - count);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}

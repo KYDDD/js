@@ -75,3 +75,50 @@ zzaz
 2
 */
 
+function main() {
+  const data = getData();
+  let count = 0;
+
+  for (let i = 1; i <= data[0]; i++) {
+    let word = data[i];
+    let used = [];
+    let prev = "";
+    let isValid = true;
+
+    for (let j = 0; j < word.length; j++) {
+      let ch = word[j];
+
+      if (ch !== prev && used.includes(ch)) {
+        isValid = false;
+        break;
+      }
+
+      if (!used.includes(ch)) {
+        used.push(ch);
+      }
+      prev = ch;
+    }
+
+    if (!isValid) {
+      count++;
+    }
+  }
+
+  console.log(data[0] - count);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}

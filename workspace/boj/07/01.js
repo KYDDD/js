@@ -148,3 +148,45 @@ N과 M은 100보다 작거나 같고, 행렬의 원소는 절댓값이 100보다
 1 1 -1
 */
 
+function main() {
+  const data = getData();
+  const newArray = [];
+  const row = data[0][0];
+  const column = data[0][1];
+
+  if (column === 1) {
+    for (let i = 0; i < row; i++) {
+      newArray[i] = data[i + 1] + data[i + 1 + row];
+    }
+    for (let i = 0; i < newArray.length; i++) {
+      console.log(newArray[i]);
+    }
+    return;
+  }
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < column; j++) {
+      if (!newArray[i]) newArray[i] = [];
+      newArray[i][j] = data[i + 1][j] + data[i + row + 1][j];
+    }
+  }
+
+  for (let i = 0; i < newArray.length; i++) {
+    console.log(...newArray[i]);
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}

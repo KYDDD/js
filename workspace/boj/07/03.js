@@ -63,3 +63,33 @@ P5h3kx
 Aa0aPAf985Bz1EhCz2W3D1gkD6x
 */
 
+function main() {
+  const data = getData();
+  const lengths = [];
+
+  const arrayData = [];
+  for (let i = 0; i < data.length; i++) {
+    const row = String(data[i]).split("");
+    arrayData.push(row);
+    lengths.push(row.length);
+  }
+
+  const maxLength = Math.max(...lengths);
+  const result = [];
+
+  for (let i = 0; i < maxLength; i++) {
+    for (let j = 0; j < arrayData.length; j++) {
+      const ch = arrayData[j][i];
+      if (ch !== undefined) result.push(ch);
+    }
+  }
+  const resultString = [...result].join("");
+  console.log(resultString);
+}
+main();
+
+function getData() {
+  const raw = require("fs").readFileSync(0).toString().trim();
+  if (/^\d+$/.test(raw)) return raw.split("").map(Number);
+  return raw.split("\n").map((line) => line.split(" "));
+}

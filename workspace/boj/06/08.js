@@ -88,3 +88,67 @@ SplayTree 1.0 F
 0
 */
 
+function main() {
+  const data = getData();
+  let avgSum = 0;
+  let scoreSum = 0;
+
+  const minusP = data.filter((item) => {
+    return item[2] !== "P";
+  });
+
+  for (let i = 0; i < minusP.length; i++) {
+    avgSum += minusP[i][1];
+
+    const score = minusP[i][2];
+
+    switch (score) {
+      case "A+":
+        scoreSum += 4.5 * minusP[i][1];
+        break;
+      case "A0":
+        scoreSum += 4.0 * minusP[i][1];
+        break;
+      case "B+":
+        scoreSum += 3.5 * minusP[i][1];
+        break;
+      case "B0":
+        scoreSum += 3.0 * minusP[i][1];
+        break;
+      case "C+":
+        scoreSum += 2.5 * minusP[i][1];
+        break;
+      case "C0":
+        scoreSum += 2.0 * minusP[i][1];
+        break;
+      case "D+":
+        scoreSum += 1.5 * minusP[i][1];
+        break;
+      case "D0":
+        scoreSum += 1.0 * minusP[i][1];
+        break;
+      case "F":
+        scoreSum += 0.0 * minusP[i][1];
+        break;
+    }
+  }
+
+  const result = Math.round((scoreSum / avgSum) * 1000000) / 1000000;
+  console.log(result);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}

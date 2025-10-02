@@ -32,3 +32,52 @@ https://u.acmicpc.net/6000c956-1b07-4913-83c3-72eda18fa1d1/Screen%20Shot%202021-
 260
 */
 
+function main() {
+  const data = getData();
+
+  const board = [];
+
+  const paperCount = data[0];
+
+  for (let i = 0; i < 100; i++) {
+    const row = [];
+    for (let j = 0; j < 100; j++) {
+      row.push(false);
+    }
+    board.push(row);
+  }
+
+  for (let i = 1; i <= paperCount; i++) {
+    const [x, y] = data[i];
+    for (let X = x; X < x + 10; X++) {
+      for (let Y = y; Y < y + 10; Y++) {
+        board[X][Y] = true;
+      }
+    }
+  }
+
+  let area = 0;
+  for (let X = 0; X < 100; X++) {
+    for (let Y = 0; Y < 100; Y++) {
+      if (board[X][Y]) area++;
+    }
+  }
+
+  console.log(area);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}

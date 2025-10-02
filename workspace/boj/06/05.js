@@ -36,3 +36,50 @@ baaa
 A
 */
 
+function main() {
+  const data = getData();
+  const arrayData = data.split("");
+  const upperData = arrayData.map((item) => {
+    return item.toUpperCase();
+  });
+  const count = {};
+  let top = "";
+
+  upperData.forEach((item) => {
+    if (count[item] === undefined) {
+      count[item] = 0;
+      count[item]++;
+      return;
+    }
+    count[item]++;
+  });
+
+  const sortedEntries = Object.entries(count).sort((a, b) => b[1] - a[1]);
+
+  if (sortedEntries.length === 1) {
+    console.log(sortedEntries[0][0]);
+    return;
+  }
+
+  if (sortedEntries[0][1] === sortedEntries[1][1]) {
+    console.log("?");
+  } else {
+    console.log(sortedEntries[0][0]);
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
