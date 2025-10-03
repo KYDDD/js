@@ -93,3 +93,35 @@ N은 1 이상 10,000 이하이다. K는 1 이상 N 이하이다.
 예제 출력 13
 0
 */
+
+function main() {
+  const data = getData();
+  const div = [];
+
+  for (let i = 1; i <= data[0]; i++) {
+    if (data[0] % i === 0) {
+      div.push(i);
+    }
+  }
+  if (div.length < data[1]) {
+    console.log(0);
+    return;
+  }
+  console.log(div[data[1] - 1]);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}

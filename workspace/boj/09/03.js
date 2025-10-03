@@ -31,3 +31,39 @@ n이 완전수가 아니라면 n is NOT perfect. 를 출력한다.
 28 = 1 + 2 + 4 + 7 + 14
 */
 
+function main() {
+  const data = getData();
+
+  for (let i = 0; i < data.length - 1; i++) {
+    const div = [];
+    let sum = 0;
+    for (let j = 1; j < data[i]; j++) {
+      if (data[i] % j === 0) {
+        div.push(j);
+        sum += j;
+      }
+    }
+
+    if (data[i] === sum) {
+      console.log(`${data[i]} = ${div.join(" + ")}`);
+    } else {
+      console.log(`${data[i]} is NOT perfect.`);
+    }
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
