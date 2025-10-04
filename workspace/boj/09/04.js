@@ -87,3 +87,40 @@
 0
 */
 
+function main() {
+  const data = getData();
+  const numberCount = data[0];
+  const numbers = data[1];
+
+  let count = 0;
+
+  for (let i = 0; i < numberCount; i++) {
+    const div = [];
+    for (let j = 1; j <= numbers[i]; j++) {
+      if (numbers[i] % j === 0) {
+        div.push(j);
+      }
+    }
+    if (div.length === 2) {
+      count++;
+    }
+  }
+
+  console.log(count);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
