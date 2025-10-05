@@ -61,3 +61,35 @@ N이 1인 경우 아무것도 출력하지 않는다.
 103
 */
 
+function main() {
+  const data = getData();
+
+  let number = data;
+  for (let i = 2; i <= data; i++) {
+    if (number % i === 0) {
+      console.log(i);
+      number = number / i;
+      i = 1;
+    }
+
+    if (number === 1) {
+      break;
+    }
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
