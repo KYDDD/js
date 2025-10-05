@@ -101,3 +101,48 @@ M이상 N이하의 자연수 중 소수인 것을 모두 찾아 첫째 줄에 �
 11
 */
 
+function main() {
+  const data = getData();
+  const start = data[0];
+  const end = data[1];
+
+  const result = [];
+  let sum = 0;
+
+  for (let i = start; i <= end; i++) {
+    const div = [];
+    for (let j = 1; j <= i; j++) {
+      if (i % j === 0) {
+        div.push(j);
+      }
+    }
+    if (div.length === 2) {
+      result.push(i);
+      sum += i;
+    }
+  }
+
+  if (sum !== 0) {
+    console.log(sum);
+    console.log(result[0]);
+  } else {
+    console.log(-1);
+    return;
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
