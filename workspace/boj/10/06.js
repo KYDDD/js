@@ -100,4 +100,38 @@ Isosceles
 예제 출력 11
 Error
 */
+function main() {
+  const data = getData();
 
+  const triangle = {
+    A: data[0],
+    B: data[1],
+    C: data[2],
+  };
+
+  if (triangle.A === 60 && triangle.B === 60 && triangle.C === 60) {
+    console.log("Equilateral");
+  } else if (triangle.A + triangle.B + triangle.C === 180 && (triangle.A === triangle.B || triangle.B === triangle.C || triangle.C === triangle.A)) {
+    console.log("Isosceles");
+  } else if (triangle.A + triangle.B + triangle.C === 180 && (triangle.A !== triangle.B) !== triangle.C) {
+    console.log("Scalene");
+  } else {
+    console.log("Error");
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
