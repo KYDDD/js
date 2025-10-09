@@ -52,3 +52,34 @@ x, y, w, h는 정수
 161
 */
 
+function main() {
+  const data = getData();
+
+  const x = data[0];
+  const y = data[1];
+  const w = data[2];
+  const h = data[3];
+
+  const closestX = Math.min(w - x, x);
+  const closestY = Math.min(h - y, y);
+
+  const result = Math.min(closestX, closestY);
+
+  console.log(result);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
