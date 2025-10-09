@@ -40,3 +40,32 @@ a, b, c가 주어졌을 때, 만들 수 있는 가장 큰 둘레를 구하는 �
 113
 */
 
+function main() {
+  const data = getData();
+  const sortedTriangle = [...data].sort((a, b) => b - a);
+  let result = 0;
+
+  if (sortedTriangle[0] >= sortedTriangle[1] + sortedTriangle[2]) {
+    result = sortedTriangle[1] * 2 + sortedTriangle[2] * 2 - 1;
+  } else {
+    result = sortedTriangle[0] + sortedTriangle[1] + sortedTriangle[2];
+  }
+
+  console.log(result);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
