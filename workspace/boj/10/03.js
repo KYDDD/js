@@ -43,3 +43,49 @@
 30 10
 */
 
+function main() {
+  const data = getData();
+
+  const X = [data[0][0], data[1][0], data[2][0]];
+  const Y = [data[0][1], data[1][1], data[2][1]];
+
+  const countX = {};
+  for (let i = 0; i < X.length; i++) {
+    if (Object.hasOwn(countX, X[i])) {
+      countX[X[i]]++;
+    } else {
+      countX[X[i]] = 1;
+    }
+  }
+
+  const resultX = Object.keys(countX).find((k) => countX[k] === 1);
+
+  const countY = {};
+  for (let i = 0; i < Y.length; i++) {
+    if (Object.hasOwn(countY, Y[i])) {
+      countY[Y[i]]++;
+    } else {
+      countY[Y[i]] = 1;
+    }
+  }
+
+  const resultY = Object.keys(countY).find((k) => countY[k] === 1);
+
+  console.log(resultX, resultY);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
