@@ -42,3 +42,24 @@ https://upload.acmicpc.net/5b7d2e93-e324-40c8-a274-0104750d6c43/-/preview/
 12
 */
 
+function main() {
+  const data = getData();
+
+  console.log(data * 4);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
