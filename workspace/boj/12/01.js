@@ -89,3 +89,42 @@ N장의 카드에 써져 있는 숫자가 주어졌을 때, M을 넘지 않으�
 74
 */
 
+function main() {
+  const data = getData();
+
+  const N = data[0][0];
+  const M = data[0][1];
+
+  const card = data[1];
+  let result = 0;
+
+  for (let i = 0; i < N; i++) {
+    for (let j = i + 1; j < N; j++) {
+      for (let k = j + 1; k < N; k++) {
+        const sum = card[i] + card[j] + card[k];
+
+        if (sum <= M && sum > result) {
+          result = sum;
+        }
+      }
+    }
+  }
+
+  console.log(result);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
