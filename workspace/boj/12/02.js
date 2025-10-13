@@ -76,3 +76,46 @@
 91
 */
 
+function main() {
+  const data = getData();
+  const result = [];
+
+  for (let i = 1; i < data; i++) {
+    const number = i;
+    const numberArr = String(i)
+      .split("")
+      .map((item) => Number(item));
+
+    let sum = 0;
+
+    for (num of numberArr) {
+      sum += num;
+    }
+
+    if (number + sum === data) {
+      result.push(number);
+    }
+  }
+
+  if (result.length === 0) {
+    console.log(0);
+    return;
+  }
+  console.log(Math.min(...result));
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
