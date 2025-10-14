@@ -90,3 +90,42 @@ dx + ey = f
 1 2
 */
 
+function main() {
+  const data = getData();
+  const a = data[0];
+  const b = data[1];
+  const c = data[2];
+  const d = data[3];
+  const e = data[4];
+  const f = data[5];
+
+  let x;
+  let y;
+
+  for (let i = -999; i <= 999; i++) {
+    for (let j = -999; j <= 999; j++) {
+      if (a * i + b * j === c && d * i + e * j === f) {
+        x = i;
+        y = j;
+      }
+    }
+  }
+
+  console.log(x, y);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
