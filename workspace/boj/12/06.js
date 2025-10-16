@@ -51,3 +51,42 @@
 3
 */
 
+function main() {
+  const totalSugar = getData();
+  const result = [];
+
+  for (let largeBag = 0; largeBag * 5 < totalSugar; largeBag++) {
+    if (totalSugar % 5 === 0) {
+      result.push(totalSugar / 5);
+      break;
+    }
+    const smallBag = (totalSugar - largeBag * 5) / 3;
+    if (Number.isInteger(smallBag) === false) {
+      continue;
+    }
+
+    result.push(smallBag + largeBag);
+  }
+
+  if (result.length === 0) {
+    console.log(-1);
+  } else {
+    console.log(Math.min(...result));
+  }
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
