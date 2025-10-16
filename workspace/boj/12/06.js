@@ -55,11 +55,7 @@ function main() {
   const totalSugar = getData();
   const result = [];
 
-  for (let largeBag = 0; largeBag * 5 < totalSugar; largeBag++) {
-    if (totalSugar % 5 === 0) {
-      result.push(totalSugar / 5);
-      break;
-    }
+  for (let largeBag = 0; largeBag * 5 <= totalSugar; largeBag++) {
     const smallBag = (totalSugar - largeBag * 5) / 3;
     if (Number.isInteger(smallBag) === false) {
       continue;
