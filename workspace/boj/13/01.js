@@ -181,3 +181,27 @@ N개의 수가 주어졌을 때, 이를 오름차순으로 정렬하는 프로�
 5
 */
 
+function main() {
+  const data = getData();
+  const number = data[0];
+  const sliceData = data.slice(1, 1 + number);
+  const sortedData = sliceData.sort((a, b) => a - b);
+
+  sortedData.forEach((item) => console.log(item));
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+
+  for (let row of arr) {
+    const rowArr = row.split(" ");
+    for (let k = 0; k < rowArr.length; k++) {
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+
+  return result.length === 1 ? result[0] : result;
+}
